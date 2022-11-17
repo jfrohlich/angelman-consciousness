@@ -1239,7 +1239,13 @@ switch plotting
         makefighandsome
         print('-dpng','./figures/ASAbsPower.png')
         print('-dsvg','./figures/ASAbsPower.svg')
-
+        
+        %% Export info for figure 3 
+        
+        Freq = foi';
+        Tfig3 = table(Freq,ASWakePowCA,ASSleepPowCA,TDWakePowCA,TDSleepPowCA,DSWakePowCA,DSSleepPowCA);
+        writetable(Tfig3,'./Table_fig3.csv')
+        
         %% Invidual PSD traces
 
         myfigure
@@ -1303,7 +1309,7 @@ switch plotting
         print('-dsvg','./Figures/TD_sleep_all_traces.svg')
 
         save dataPeaks 
-        keyboard
+        %keyboard
         
         %% Power differences, absolute power
         
@@ -1546,6 +1552,12 @@ switch plotting
         %plot(log2(foi_hd),zeros(1,length(foi_hd)),'k:')
         print('-dpng','./figures/RelPowerWakeSleep.png')
         print('-dsvg','./figures/RelPowerWakeSleep.svg')
+        
+        %% Export info for figure 3 (relative power
+        
+        Freq = foi';
+        Tfig3_rel = table(Freq,ASWakePowRCA,ASSleepPowRCA,TDWakePowRCA,TDSleepPowRCA,DSWakePowRCA,DSSleepPowRCA);
+        writetable(Tfig3_rel,'./Table_fig3_rel.csv')
              
         
         %% dwPLI CIs
@@ -1634,6 +1646,14 @@ switch plotting
         print('-dpng','./figures/SRdwPLIWakeSleep.png')
         print('-dsvg','./figures/SRdwPLIWakeSleep.svg')
         
+        %% Export info for figure 4 (short range)
+        
+        Freq = foi';
+        Tfig4_dwPLI_SR = table(Freq,ASWakedwPLI_SR',ASSleepdwPLI_SR',TDWakedwPLI_SR',TDSleepdwPLI_SR',DSWakedwPLI_SR',DSSleepdwPLI_SR');
+        writetable(Tfig4_dwPLI_SR,'./Table_fig4_wPLI_SR.csv')
+        
+        
+        
         %% Plot longrange dwPLI spectrum
         myfigure
         
@@ -1700,6 +1720,12 @@ switch plotting
         
         print('-dpng','./figures/LRdwPLIWakeSleep.png')
         print('-dsvg','./figures/LRdwPLIWakeSleep.svg')
+        
+        %% Export info for figure 4 (long range)
+        
+        Freq = foi';
+        Tfig4_dwPLI_LR = table(Freq,ASWakedwPLI_LR',ASSleepdwPLI_LR',TDWakedwPLI_LR',TDSleepdwPLI_LR',DSWakedwPLI_LR',DSSleepdwPLI_LR');
+        writetable(Tfig4_dwPLI_LR,'./Table_fig4_wPLI_LR.csv')
         
         %%% UNCOMMENT TO ALSO PLOT wSMI AS FUNCTION OF LAG TAU %%%
 %         %% wSMI
@@ -2448,7 +2474,7 @@ switch job
         end
 end
 
-%%
+ %%
 
 switch job
     case 'FindFeatures'
@@ -2761,7 +2787,7 @@ switch job
             % Test to see if the curve has the correct number of points, 
             % N + 1, where N is the number of data sests
             
-            [X_AS,Y_AS,T_AS,AUC_AS,opt_AS] = perfcurve(ASgt,ASfit,1,...
+            [X_AS,Y_AS,T_AS,AUC_AS,opt_AS,bs_AS] = myperfcurve(ASgt,ASfit,1,...
                 'XCrit','FPR','YCrit','TPR','Nboot',Nboot,'Alpha',0.05);
             
             % Compare training AUC to k-fold CV AUC
@@ -2842,7 +2868,7 @@ switch job
             % Test to see if the curve has the correct number of points, 
             % N + 1, where N is the number of data sests
                         
-            [X_TD,Y_TD,T_TD,AUC_TD,opt_TD] = perfcurve(TDgt,TDfit,1,...
+            [X_TD,Y_TD,T_TD,AUC_TD,opt_TD,bs_TD] = myperfcurve(TDgt,TDfit,1,...
                 'XCrit','FPR','YCrit','TPR','Nboot',Nboot,'Alpha',0.05);
             
 %             if size(X_TD,1) ~= sum(TDidx) + 1
@@ -2921,7 +2947,7 @@ switch job
             % Test to see if the curve has the correct number of points, 
             % N + 1, where N is the number of data sests
            
-            [X_DS,Y_DS,T_DS,AUC_DS,opt_DS] = perfcurve(DSgt,DSfit,1,...
+            [X_DS,Y_DS,T_DS,AUC_DS,opt_DS,bs_DS] = myperfcurve(DSgt,DSfit,1,...
                 'XCrit','FPR','YCrit','TPR','Nboot',Nboot,'Alpha',0.05);
             
 %             if size(X_DS,1) ~= sum(DSidx) + 1
@@ -2982,6 +3008,71 @@ switch job
                 results(3,2,ift-1,1),results(3,1,ift-1,1),results(3,3,ift-1,1),results(3,4,ift-1,1))
             fprintf('\n')
             
+            % plot histograms of boostrapped distributions
+            myfigure
+            hold on
+            if contains(feats{ift},'Entropy') % dark colors for entropy
+                [H_AS] = histogram(bs_AS,0:0.01:1,'facecolor','#0072BD');
+            else % light colors for spectral
+                [H_AS] = histogram(bs_AS,0:0.01:1,'facecolor','c');
+            end
+                
+            title(sprintf('AS AUC %i bootstraps, %s %s',Nboot,feats{ift},method))
+            xlabel('AUC (%)')
+            ylabel('Bootstrapped resamples')
+            set(gca,'YScale','log')
+            axis([0 1 0 10000])
+            xticks([0 0.2 0.4 0.6 0.8 1])
+            xticklabels([0 20 40 60 80 100])
+            makefighandsome
+            outname = sprintf('AS_AUC_hist_%i_%s_%s',Nboot,feats{ift},method);
+            print('-dsvg',sprintf('./Figures/%s',outname))
+            print('-dpng',sprintf('./Figures/%s',outname))
+            
+            myfigure
+            hold on
+            if contains(feats{ift},'Entropy') % dark colors for entropy
+                [H_TD] = histogram(bs_TD,0:0.01:1,'facecolor','#77AC30');
+            else % light colors for spectral
+                [H_TD] = histogram(bs_TD,0:0.01:1,'facecolor','g');
+            end
+                
+            title(sprintf('NT AUC %i bootstraps, %s %s',Nboot,feats{ift},method))
+            xlabel('AUC (%)')
+            ylabel('Bootstrapped resamples')
+            set(gca,'YScale','log')
+            axis([0 1 0 10000])
+            xticks([0 0.2 0.4 0.6 0.8 1])
+            xticklabels([0 20 40 60 80 100])
+            makefighandsome
+            outname = sprintf('NT_AUC_hist_%i_%s_%s',Nboot,feats{ift},method);
+            print('-dsvg',sprintf('./Figures/%s',outname))
+            print('-dpng',sprintf('./Figures/%s',outname))
+            
+            myfigure
+            hold on
+            if contains(feats{ift},'Entropy') % dark colors for entropy
+                [H_DS] = histogram(bs_DS,0:0.01:1,'facecolor','#A2142F');
+            else % light colors for spectral
+                [H_DS] = histogram(bs_DS,0:0.01:1,'facecolor','r');
+            end
+                
+            title(sprintf('Dup15q AUC %i bootstraps, %s %s',Nboot,feats{ift},method))
+            xlabel('AUC (%)')
+            ylabel('Bootstrapped resamples')
+            set(gca,'YScale','log')
+            axis([0 1 0 10000])
+            xticks([0 0.2 0.4 0.6 0.8 1])
+            xticklabels([0 20 40 60 80 100])
+            makefighandsome
+            outname = sprintf('DS_AUC_hist_%i_%s_%s',Nboot,feats{ift},method);
+            print('-dsvg',sprintf('./Figures/%s',outname))
+            print('-dpng',sprintf('./Figures/%s',outname))
+            
+            % get histogram data
+            eval(sprintf('AS_%s_boots = H_AS.Values''',feats{ift}))
+            eval(sprintf('TD_%s_boots = H_TD.Values''',feats{ift}))
+            eval(sprintf('DS_%s_boots = H_DS.Values''',feats{ift}))
 
             xAS{ift-1} = X_AS(:,1);
             xTD{ift-1} = X_TD(:,1);
@@ -3015,6 +3106,14 @@ switch job
         assert(all(single(results(:,:,:,1)) >= single(results(:,:,:,2)) & ...
             single(results(:,:,:,1)) <= single(results(:,:,:,3)),[1 2 3]),...
             'True values are not contained within 95% CIs!')
+        
+        AUC_bins = [0.005:0.01:0.995]';
+        Tfig7 = table(AUC_bins,AS_fcEntropy_boots,AS_fcSpectral_boots,AS_scEntropy_boots,AS_scSpectralA_boots,AS_scSpectralR_boots,...
+            TD_fcEntropy_boots,TD_fcSpectral_boots,TD_scEntropy_boots,TD_scSpectralA_boots,TD_scSpectralR_boots,...
+            DS_fcEntropy_boots,DS_fcSpectral_boots,DS_scEntropy_boots,DS_scSpectralA_boots,DS_scSpectralR_boots);
+        writetable(Tfig7,sprintf('./Fig7_table_%s.csv',method))
+        
+        
         %% Plot ROC curves separately for each group
         
         ro = [4 3 1 5 2]; % reorder to get the colors we want for each group
@@ -4563,7 +4662,7 @@ switch job
             'AS TPR','NT TPR','DS TPR',...
             'AS TNR','NT TNR','DS TNR'})
         
-        writetable(Tall,'./AllVariableScores.csv')
+       
         
         
         %% Show classification stats for all variables
@@ -4572,6 +4671,7 @@ switch job
         reorder = [find(contains(vartype3,'scEntropy')) find(contains(vartype3,'fcEntropy')) ...
             find(contains(vartype3,'scSpectralA')) find(contains(vartype3,'scSpectralR')) ...
             find(contains(vartype3,'fcSpectral'))];
+        writetable(Tall(reorder,:),'./AllVariableScores.csv')
         tmp2 = Tall.Vars(reorder);
         varlabels = replace(tmp2,'_',' ');
         varlabels = replace(varlabels,'slow','s');

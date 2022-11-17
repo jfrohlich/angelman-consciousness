@@ -1,7 +1,6 @@
 % 000_analysis
 % Joel Frohlich
-% March 5, 2019
-% Last updated: December 29, 2021
+% Last updated: 17 November, 2022
  
 000_analysis_AS_Monti.m % This file describes each script and the analysis pipeline
 
@@ -118,6 +117,7 @@ ana_AS_wPLI_Dup15q.m               % Same as above, but for Dup15q
 ana_AS_wSMI.m                      % Routine for the weighted symbolic mutual information on AS data by calling code by Jaco Sitt
 ana_AS_wSMI_TD.m                   % Same as above, but for healthy controls
 ana_AS_wSMI_Dup15q.m               % Same as above, but for Dup15q 
+CountPeaksFooof.m                  % Count spectral peaks (channel-averaged) for each participant
 MSE_simulated_data.m               % Does MSE on toy data--useful for understanding MSE on different data types
 PermEnDecomposition.m              % Modified code from Pedro, this is what actually run the Permutation Entropy decomposition 
 
