@@ -43,7 +43,7 @@ gpu2cpu.m                      # gathers data from GPU arrays back into regular 
 powernoise.m                   # Generates power-law noise (not used by any analysis scripts but useful for playing with new functions) 
 Double_check_annotaions.m      # Double check that we don't have sleep marked incorrectly (e.g., that there are no awake tags in the sections marked as sleep)
 freq_wavelet_bias_test.m       # Test to see if allow_nan parameter biases the frequency transform 
-sleep_field_repair.m           # Honestly don't remember exactly ... something to do with check the sleep fields
+sleep_field_repair.m           # Check the sleep fields
 MSE_debugging                  # Test effects of NaNs on the ro_mse tool
 LZC_debugging                  # Test effects of NaNs on the ro_LZC tool 
 ana_AS_update_fields_butterHPfirLP_2021.m # This take the already filtered data (FIR lowpass, IIR (butterworth) highpass) and populate the datastructure fields with info from the FIR bandpass filtered data, including ICA weights.
@@ -122,53 +122,3 @@ AS_big_picture_figure.m                # Plots barplots of ROC AUCs for each fea
 connectivity_distance_plotting.m       # Generates histogram of channel distances and matrix of channel-pair groupings
 Dup15q_example_EEG_plotting.m          # Plots Dup15q EEG traces for Fig. 1 in the new paper
 LZc_illustration.m                     # Generates schematic of LZC for Fig. 1
-
-
-## Deletion candidates (these are now archived or deleted)
-ana_AS_2021_ML_and_STATS_Jeff.m    # This is a slight modification of the main analysis script that implements a suggestion by Jeff for the stats (currently unused, move to deletion candidates?)
-ana_AS_ANOVA.R              # Unused R script that looks at each EEG measure with ANOVA (IVs: sleep, group, age)
-ana_AS_CD.m                 # Compute the causal density (Anil Seth)
-ana_AS_CD_mo.m              # Find the proper model order for causal density
-ana_AS_CD_mo_awake.m        # Find the proper model order (awake EEG only)
-ana_AS_coh.m                # Unused script, precessor to the dwPLI script ... began writing this one to look at coherence between channels
-ana_AS_DE.m                 # Differential entropy for AS, this measure didn't work well on our data
-ana_AS_DE_TD.m              # Differential entropy for healthy controls, this measure didn't work well on our data
-ana_AS_DFA.m                # Compute DFA (unused)
-ana_AS_FT.m                 # Does the frequency transform calling ro_freq_wavelet_JF, allow_nan = 0.5
-ana_AS_LZC_decomp.m         # Abandoned attempt at Lempel-Ziv decomposition. The newest paper instead does a similar decomp on permutation entropy 
-ana_AS_MSE_Xie.m            # Computes the multiscale entropy for AS -- this version is archive because it does NOT dynamicaly adjust the tolerance r for each timescale
-ana_AS_PCA.m                # This was for a PCA of the AS EEG --Does PCA on the awake and asleep data concatenated together
-ana_AS_phi.m                # Compute phi from EEG
-ana_AS_phi_sleep.m          # Compute phi from sleep EEG (already deleted?)
-ana_AS_phi_awake.m          # Compute phi from awake EEG (already deleted?)
-ana_AS_postproc.m           # Data postprocessing: remove bad ICs, interpolate bad channels, reref to average
-ana_AS_stats_controls.m            # An early version of the stats script for the new paper--this was replaced by ana_AS_2021_ML_and_STATS.m 
-ana_AS_stats_controls_2021.m       # Another early version of the stats script for the new paper -- replaced by ana_AS_2021_ML_and_STATS.m 
-ana_AS_update_fields_butter_2021.m # Populated the data sturcture fields with info from the old, FIR filtered data.
-eegfordipfit.m              # reformat the data so that we can do dipfit (dipole source localization). This was never used.
-ana_AS_DFA_stats.m        # stats for DFA -- hasn't be used
-ana_AS_LZC_stats.m        # was the stats for lempel ziv, not used anymore
-ana_AS_match_power.m      # old method of matching wake/sleep power 
-ana_AS_MSE.m              # Does MSE on all AS data by calling ro_mse.m--does not specify dynamic tolerance
-correlation_phenotype_unused.m         # Shows correlations between gMLZ and all covaries (unused in manuscript)
-ro_freq_wavelet_dfa.m     # Unused -- this was written for the DFA analysis 
-ro_DE.m                   # Implements the differential entropy, never used
-progressbar.m             # Downloaded from fileexchange, never used 
-test_regression_models.m  # Not sure if I remember what this one was for? 
-ana_AS_criticality.m               # This is the script to compute D. Toker's criticality measure on AS data. Unused in our paper because criticality is not an entropy measure--our analysis focused on spectral vs entropy
-ana_AS_criticality_Dup15q.m        # Computes Toker's criticality measure on Dup15q data--not used for reasons mentioned for ana_AS_criticality.m
-ana_AS_criticality_TD.m            # Computes Toker's criticality measure on healthy data--not used for reason mentioned above.
-ana_AS_stats_cluster.m             # Performed stats (including cluster permutation statistics) and generated figures for the first paper (Neurosci of Consci)
-ana_AS_stats_cluster_short.m       # Abbreviated version of the above script. For all stats/figures, run the full script above.
-ana_AS_find_sections_PHZ.m     # Finds appropraite sleep/wake sections to match using the findchangepts() function and taking into account posterior hot zone (PHZ) in sleep 
-ana_AS_sleep_PHZ               # This is the function that tests our method of using PHZ to classify sleep into dreaming and no expereince. Use this to generate figures for reviewers.
-MSE_simulated_data.m               # Does MSE on toy data--useful for understanding MSE on different data types
-Figure_1_New.m                         # Generates subpanels for Fig. 1 in the first paper (Neurosci of Consci)
-SimulatedEEG.m                         # Simulated EEG signals for the conceptual figure in the discussion section of AS paper (Neurosci of Consci 2020)
-Supplemental_EEG_Figure                # Figure requested by reviewer showing longer sections of EEG and power spectra for sleep wake in 27-month-old girl with AS
-permclustertest.m                      # Does permutation cluster statistics on UNPAIRED data
-RMpermclusttest.m                      # Does permutation cluster statistics on paired or repeated measures data
-ana_AS_stats_cluster.m                 # Does stats and figures using permutation cluster statistics
-ana_AS_stats_cluster_short.m           # Same as ana_AS_stats_cluster.m, but with old/unneeded sections omitted (just the figures that should go into paper)
-LZC_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between LZC and delta power
-MSE_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between MSE and delta power
