@@ -1,12 +1,21 @@
-% 000_analysis
-% Joel Frohlich
-% Last updated: 17 November, 2022
+000_analysis
+Joel Frohlich
+Last updated: 17 November, 2022
  
-000_analysis_AS_Monti.m % This file describes each script and the analysis pipeline
+### Preamble ###
+This was a big project with lots of scripts. Confused? If you want to replicate 
+the machine learning analysis, the script you're looking for is ana_AS_2021_ML_and_STATS.m, 
+which runs the actual stats and machine learning on EEG features. If you are 
+looking to replicate other parts of the project, or just wanting to understand
+the dependencies of the main script, see below for a list of what each .m file
+actually does. 
 
-%% General overview of work flow
+000_analysis_AS_Monti.m % This file describes each script and the analysis pipeline 
+(it's basically this readme file, but as a .m file)
 
-# For the new paper (machine learning), data are first imported using 
+## General overview of work flow
+
+# Data are imported using 
 # ana_preproc_as_*_butterHP_firLP.m, where "*" designates the specific data
 # being imported (e.g., "Dup15q_wsleep"). Imported data are manually 
 # inspected and ICA is performed using AS_data_scroll.m, and data are then
@@ -32,8 +41,6 @@ plot_topo_AS.m                 # AS specific wrapper for topo plotting
 plot_topo_AS_classic.m         #  This wrapper function calls the "classic" (i.e., original) FT topoplot function with thin countour lines 
 effect_size.m                  # helper function: cohen's d 
 makefigpretty.m                # Renders figure in format suitable for journal publication (This has been moved to Universal directory)
-ana_AS_find_sections_PHZ.m     # Finds appropraite sleep/wake sections to match using the findchangepts() function and taking into account posterior hot zone (PHZ) in sleep 
-ana_AS_sleep_PHZ               # This is the function that tests our method of using PHZ to classify sleep into dreaming and no expereince. Use this to generate figures for reviewers.
 ana_AS_max_pow_wake.m          # Identifies sections of awake EEG to match with sleep on power (by finding the awake EEG with highest delta power)
 myresample.m                   # Fixes bug in the native Matlab function
 myround.m                      # Used for finding smoothing windows with gMLZ; this is a wrapper version of the native MATLAB round function that allows user to specify whether we should round towards nearest ODD integer. 
@@ -93,12 +100,8 @@ ana_AS_postproc_TD.m               # The current postproc script for healthy con
 ## analysis 
 
 ana_AS_2021_ML_and_STATS.m         # This is the main script that runs the stats and generates figures for the newest paper (Machine learning)
-ana_AS_2021_ML_and_STATS_Jeff.m    # This is a slight modification of the main analysis script that implements a suggestion by Jeff for the stats (currently unused, move to deletion candidates?)
 ana_AS_2021_ML_Train_On_TD.m       # This is just like ana_AS_2021_ML_and_STATS, EXCEPT that it implements the neurotypical replication analysis (i.e., the training is done on healthy children rather than Angelman syndrome)
-ana_AS_criticality.m               # This is the script to compute D. Toker's criticality measure on AS data. Unused in our paper because criticality is not an entropy measure--our analysis focused on spectral vs entropy
-ana_AS_criticality_Dup15q.m        # Computes Toker's criticality measure on Dup15q data--not used for reasons mentioned for ana_AS_criticality.m
-ana_AS_criticality_TD.m            # Computes Toker's criticality measure on healthy data--not used for reason mentioned above.
-ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 THIS IS THE VERSION WE USED FOR BOTH PAPERS
+ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 THIS IS THE VERSION WE USED
 ana_AS_FT_Dup15q_allow_nan_0dot2.m # Same as above for Dup15q
 ana_AS_FT_TD_allow_nan_0dot2.m     # Same as above for healthy controls
 ana_AS_LZC.m                       # Computes Lempel-Ziv for AS
@@ -108,8 +111,6 @@ ana_AS_MSE_Xie_dynr.m              # Computes multiscale entropy for AS with dyn
 ana_AS_MSE_Xie_dynr_Dup15q_controls.m # Same as above for Dup15q
 ana_AS_MSE_Xie_dynr_TD_controls.m  # Same as above for healthy controls
 ana_AS_PermEn_Decomp.m             # This calls the permutation entropy decomposition on the AS data and does the stats, figures, etc.
-ana_AS_stats_cluster.m             # Performed stats (including cluster permutation statistics) and generated figures for the first paper (Neurosci of Consci)
-ana_AS_stats_cluster_short.m       # Abbreviated version of the above script. For all stats/figures, run the full script above.
 ana_AS_TFT.m                       # This performs a time-frequency transform on the data, e.g., for finding sections of high/low delta power in the first paper (Neurosci of Consci)
 ana_AS_wPLI_fieldtrip.m            # Compute the dibiased weighted phase locking index on AS data using Fieldtrip
 ana_AS_wPLI_TD_fieldtrip.m         # Same as above, but for healthy controls
@@ -118,28 +119,18 @@ ana_AS_wSMI.m                      # Routine for the weighted symbolic mutual in
 ana_AS_wSMI_TD.m                   # Same as above, but for healthy controls
 ana_AS_wSMI_Dup15q.m               # Same as above, but for Dup15q 
 CountPeaksFooof.m                  # Count spectral peaks (channel-averaged) for each participant
-MSE_simulated_data.m               # Does MSE on toy data--useful for understanding MSE on different data types
 PermEnDecomposition.m              # Modified code from Pedro, this is what actually run the Permutation Entropy decomposition 
 
 ## Stats and plotting
 
-AS_big_picture_figure.m                # Plots barplots of ROC AUCs for each feature type and group
-connectivity_distance_plotting.m       # Generates sup. figure 7 for the new figure, showing histogra of channel distances and matrix of channel-pair groupings
+AS_big_picture_figure.m                # Plots barplots of ROC AUCs for each feature type and group (note--this figure was later changed to histograms)
+connectivity_distance_plotting.m       # Generates histogram of channel distances and matrix of channel-pair groupings
 Dup15q_example_EEG_plotting.m          # Plots Dup15q EEG traces for Fig. 1 in the new paper
-Figure_1_New.m                         # Generates subpanels for Fig. 1 in the first paper (Neurosci of Consci)
-LZc_illustration.m                     # Generates schematic of LZC for Fig. 1 in the new paper (machine learning)
-SimulatedEEG.m                         # Simulated EEG signals for the conceptual figure in the discussion section of AS paper (Neurosci of Consci 2020)
-Supplemental_EEG_Figure                # Figure requested by reviewer showing longer sections of EEG and power spectra for sleep wake in 27-month-old girl with AS
-permclustertest.m                      # Does permutation cluster statistics on UNPAIRED data
-RMpermclusttest.m                      # Does permutation cluster statistics on paired or repeated measures data
-ana_AS_stats_cluster.m                 # Does stats and figures using permutation cluster statistics
-ana_AS_stats_cluster_short.m           # Same as ana_AS_stats_cluster.m, but with old/unneeded sections omitted (just the figures that should go into paper)
-LZC_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between LZC and delta power
-MSE_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between MSE and delta power
+LZc_illustration.m                     # Generates schematic of LZC for Fig. 1
 
 
 ## Deletion candidates (these are now archived or deleted)
-
+ana_AS_2021_ML_and_STATS_Jeff.m    # This is a slight modification of the main analysis script that implements a suggestion by Jeff for the stats (currently unused, move to deletion candidates?)
 ana_AS_ANOVA.R              # Unused R script that looks at each EEG measure with ANOVA (IVs: sleep, group, age)
 ana_AS_CD.m                 # Compute the causal density (Anil Seth)
 ana_AS_CD_mo.m              # Find the proper model order for causal density
@@ -160,7 +151,6 @@ ana_AS_stats_controls.m            # An early version of the stats script for th
 ana_AS_stats_controls_2021.m       # Another early version of the stats script for the new paper -- replaced by ana_AS_2021_ML_and_STATS.m 
 ana_AS_update_fields_butter_2021.m # Populated the data sturcture fields with info from the old, FIR filtered data.
 eegfordipfit.m              # reformat the data so that we can do dipfit (dipole source localization). This was never used.
-
 ana_AS_DFA_stats.m        # stats for DFA -- hasn't be used
 ana_AS_LZC_stats.m        # was the stats for lempel ziv, not used anymore
 ana_AS_match_power.m      # old method of matching wake/sleep power 
@@ -170,8 +160,20 @@ ro_freq_wavelet_dfa.m     # Unused -- this was written for the DFA analysis
 ro_DE.m                   # Implements the differential entropy, never used
 progressbar.m             # Downloaded from fileexchange, never used 
 test_regression_models.m  # Not sure if I remember what this one was for? 
-
-
-
-
-
+ana_AS_criticality.m               # This is the script to compute D. Toker's criticality measure on AS data. Unused in our paper because criticality is not an entropy measure--our analysis focused on spectral vs entropy
+ana_AS_criticality_Dup15q.m        # Computes Toker's criticality measure on Dup15q data--not used for reasons mentioned for ana_AS_criticality.m
+ana_AS_criticality_TD.m            # Computes Toker's criticality measure on healthy data--not used for reason mentioned above.
+ana_AS_stats_cluster.m             # Performed stats (including cluster permutation statistics) and generated figures for the first paper (Neurosci of Consci)
+ana_AS_stats_cluster_short.m       # Abbreviated version of the above script. For all stats/figures, run the full script above.
+ana_AS_find_sections_PHZ.m     # Finds appropraite sleep/wake sections to match using the findchangepts() function and taking into account posterior hot zone (PHZ) in sleep 
+ana_AS_sleep_PHZ               # This is the function that tests our method of using PHZ to classify sleep into dreaming and no expereince. Use this to generate figures for reviewers.
+MSE_simulated_data.m               # Does MSE on toy data--useful for understanding MSE on different data types
+Figure_1_New.m                         # Generates subpanels for Fig. 1 in the first paper (Neurosci of Consci)
+SimulatedEEG.m                         # Simulated EEG signals for the conceptual figure in the discussion section of AS paper (Neurosci of Consci 2020)
+Supplemental_EEG_Figure                # Figure requested by reviewer showing longer sections of EEG and power spectra for sleep wake in 27-month-old girl with AS
+permclustertest.m                      # Does permutation cluster statistics on UNPAIRED data
+RMpermclusttest.m                      # Does permutation cluster statistics on paired or repeated measures data
+ana_AS_stats_cluster.m                 # Does stats and figures using permutation cluster statistics
+ana_AS_stats_cluster_short.m           # Same as ana_AS_stats_cluster.m, but with old/unneeded sections omitted (just the figures that should go into paper)
+LZC_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between LZC and delta power
+MSE_power_intrasubject_correlation.m   # Does the correlations within subject (30 s windows) between MSE and delta power
