@@ -15,17 +15,12 @@ actually does.
 
 ## General overview of work flow
 
-# Data are imported using 
-# ana_preproc_as_*_butterHP_firLP.m, where "*" designates the specific data
-# being imported (e.g., "Dup15q_wsleep"). Imported data are manually 
-# inspected and ICA is performed using AS_data_scroll.m, and data are then
-# postprocessed using ana_AS_postproc_butterhp_firlp.m,
-# ana_AS_postproc_Dup15q.m, or ana_AS_postproc_TD.m. After running the
-# appropriate analysis scripts to compute EEG features, one should run 
-# ana_AS_2021_ML_and_STATS to train on AS data and validate on healthy and
-# dup15q data ... this script will then do stats and figures. Finally, for
-# the NT replication (train on healthy data), one should run 
-# ana_AS_2021_ML_Train_On_TD.m
+Data are imported using ana_preproc_as_*_butterHP_firLP.m, where "*" designates the specific data
+being imported (e.g., "Dup15q_wsleep"). Imported data are manually inspected and ICA is performed using AS_data_scroll.m, and data are then
+postprocessed using ana_AS_postproc_butterhp_firlp.m, ana_AS_postproc_Dup15q.m, or ana_AS_postproc_TD.m. After running the
+appropriate analysis scripts to compute EEG features, one should run ana_AS_2021_ML_and_STATS to train on AS data and validate on healthy and
+dup15q data ... this script will then do stats and figures. Finally, for the NT replication (train on healthy data), one should run 
+ana_AS_2021_ML_Train_On_TD.m
 
 ## directories
 
