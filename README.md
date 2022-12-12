@@ -38,21 +38,9 @@ ana_AS_2021_ML_Train_On_TD.m
 *  ana_AS_update_fields_butterHPfirLP_2021.m # This take the already filtered data (FIR lowpass, IIR (butterworth) highpass) and populate the datastructure fields with info from the FIR bandpass filtered data, including ICA weights.
 *  CalcPermEn.m                   # Helper function to compute the permutation entropy, calls code by Jaco Sitt
 *  cohen_d.m                      # Computes effect sizes as Cohen's d
-*  compare_annotations.m          # compares our sleep annotations with those done by a trained neurologist through Ben Philpot's lab
-* Compare_filter_responses.m     # Compare the performance of FIR and Butterworth filters, used to choose a filter
-* Compare_filters.m              # Slightly more streamlined than the above script, this one loads data that have already been filtered and plots the powerspectra
-* FDRCorrectAndCombineTables.m   # For the Tables in the main manuscript and supplement reporting p-values for AUCs (either comparisons of entropy vs spectral or better than chance performance), this will do the FDR correction on all p-values and then generate the tables. 
-* FDRCorrectAndCombineTabesTrainOnTD.m # Same as above, but for the replication on healthy data
-* Find_drowsy_tags.m             # After loading a dataset, this will look for drowsy tags and related annotations (e.g., yawning)
-* get_annotations.m              # Computes the degree of overlap in sleep annotations (our annotations vs Philpot annotations)
-* Update_Nespeca_annotations.m   # This adds sleep blocks from a table to the existing data field:  data.cfg.dattype.AWAKE_NESPECA = [data.cfg.dattype.AWAKE_NESPECA; T.awakeStart(irow)* data.fsample T.awakeStop(irow)* data.fsample];
-* ro_dwPLI.m                     # Test the debiased weighted phase lag index code on some toy data
-
 
 ## Frequency transforms
 * ro_freq_wavelet_JF.m       # This is the main frequency transform. The "_JF" is added at the end so that the original file created by Joerg wouldn't accidentally be overwritten
-* ro_freq_wavelet_TFT.m      # This is the freq transforms that does time-frequency analysis (no averaging across time). Used for finding sections of high wakeful power
-* freq_wavelet_bias_test.m   # Quantify the bias induced by allowing NaNs in the frequency transform window 
 
 ## Tools
 
