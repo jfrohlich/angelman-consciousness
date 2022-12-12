@@ -27,22 +27,14 @@ ana_AS_2021_ML_Train_On_TD.m
 * ./scripts/archived         # Old scripts, consider deleting 
 
 ## wrappers and helpers 
-*  AS_data_scroll.m               # calls scroll_data.m, contains code for AS specific options, such as labels for delta patterns 
 *  plot_topo.m                    # wrapper function for fieldtrip plot_topo
 *  plot_topo_AS.m                 # AS specific wrapper for topo plotting 
 *  plot_topo_AS_classic.m         #  This wrapper function calls the "classic" (i.e., original) FT topoplot function with thin countour lines 
 *  effect_size.m                  # helper function: cohen's d 
 *  makefigpretty.m                # Renders figure in format suitable for journal publication (This has been moved to Universal directory)
-*  ana_AS_max_pow_wake.m          # Identifies sections of awake EEG to match with sleep on power (by finding the awake EEG with highest delta power)
 *  myresample.m                   # Fixes bug in the native Matlab function
 *  myround.m                      # Used for finding smoothing windows with gMLZ; this is a wrapper version of the native MATLAB round function that allows user to specify whether we should round towards nearest ODD integer. 
 *  gpu2cpu.m                      # gathers data from GPU arrays back into regular arrays so they can be read on computer without usable GPU
-*  powernoise.m                   # Generates power-law noise (not used by any analysis scripts but useful for playing with new functions) 
-*  Double_check_annotaions.m      # Double check that we don't have sleep marked incorrectly (e.g., that there are no awake tags in the sections marked as sleep)
-*  freq_wavelet_bias_test.m       # Test to see if allow_nan parameter biases the frequency transform 
-*  sleep_field_repair.m           # Check the sleep fields
-*  MSE_debugging                  # Test effects of NaNs on the ro_mse tool
-*  LZC_debugging                  # Test effects of NaNs on the ro_LZC tool 
 *  ana_AS_update_fields_butterHPfirLP_2021.m # This take the already filtered data (FIR lowpass, IIR (butterworth) highpass) and populate the datastructure fields with info from the FIR bandpass filtered data, including ICA weights.
 *  CalcPermEn.m                   # Helper function to compute the permutation entropy, calls code by Jaco Sitt
 *  cohen_d.m                      # Computes effect sizes as Cohen's d
