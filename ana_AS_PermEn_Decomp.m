@@ -1,6 +1,27 @@
+%%% STATS 2021 analysis %%%
+% Joel Frohlich
+% University of California, Los Angeles (UCLA)
+% Monti Lab, Psychology Department
+%
+% University of Tuebingen, Germany
+% Institue for Neuromodulation and Neurotechnology 
+%
+% Last update: 12 Dec, 2022 (cleaned up code and comments)
+
+% For each subject, the code performs a permutation entropy decomposition
+% using the PermEnDecomposition function, and saves the results to a
+% variable. The code then saves the results to a file using the save
+% function, and repeats this process for the remaining subjects. Finally,
+% the code loads the saved results and performs some additional analysis to
+% test for differences between spectral and phase components of the data.
+
+
+% Optional, clear all variables from workspace
 clearvars
+
 rng(45783) % seed added 02.26.19
-OS = computer; % detect opperating system
+
+OS = computer; % detect opperating system; disclaimer: the computer function only returns a limited number of values, and it is not guaranteed to return the correct value on all systems
 dbstop if error
 new_fsample = 125; % target sampling rate, see King et al. 2013 supplement
 ft_defaults
@@ -15,7 +36,6 @@ switch OS
         files = dir(sprintf('%s%s',pth,'*.mat'));
     case 'PCWIN64'
         pth = './postprocessed/AS/';
-        assert(strcmp(pwd,'C:\Users\joelf\OneDrive\Documents\Monti\angelman_nih\Monti\2021_analysis'),'Wrong directory')
         files = dir(sprintf('%s%s',pth,'*.mat'));
 end
 
@@ -24,17 +44,17 @@ end
 % load('select_files','select_files')
 
 sleep = true; % asleep or awake?
-[sleepsec,subs1,ages1] = get_sections(sleep,files,pth,new_fsample);
+[sleepsec,sleep_subjects,sleep_ages] = get_sections(sleep,files,pth,new_fsample);
 
 sleep = false; % asleep or awake?
-[wakesec,subs2,ages2] = get_sections(sleep,files,pth,new_fsample);
+[wakesec,wake_subjects,wake_ages] = get_sections(sleep,files,pth,new_fsample);
 
-save DecompSubs subs1 ages1 subs2 ages2
+save DecompSubs sleep_subjects sleep_ages wake_subjects wake_ages
 %%
-assert(length(subs1)==length(subs2),'Different number of wake and sleep subjects')
+assert(length(sleep_subjects)==length(wake_subjects),'Different number of wake and sleep subjects')
 
-for isub = 1:length(subs1)
-    assert(strcmp(subs1{isub},subs2{isub}),'Subjects don''t match between conditions')
+for isub = 1:length(sleep_subjects)
+    assert(strcmp(sleep_subjects{isub},wake_subjects{isub}),'Subjects don''t match between conditions')
 end
 
 assert(length(wakesec)==length(sleepsec),'Different number of sleep and wake data');
@@ -48,9 +68,9 @@ for isub = length(wakesec)-2:-1:1 % loop backwards
     if length(wakesec{isub}) >= Nsegs && length(sleepsec{isub}) >= Nsegs
         W = wakesec{isub}(randperm(length(wakesec{isub}),Nsegs));
         S = sleepsec{isub}(randperm(length(sleepsec{isub}),Nsegs));
-        OUT = PermEnDecomposition(W,subs2{isub},S,subs1{isub},Nsur,new_fsample);
+        OUT = PermEnDecomposition(W,wake_subjects{isub},S,sleep_subjects{isub},Nsur,new_fsample);
         all_decomps{isub} = OUT;
-        fprintf('Finished subject %s\n',subs1{isub})
+        fprintf('Finished subject %s\n',sleep_subjects{isub})
         toc
     else
         fprintf('     Skipping this one, not enough good segments ...\n')
@@ -59,7 +79,7 @@ for isub = length(wakesec)-2:-1:1 % loop backwards
     save PermEnDecompAS_Ns1000 all_decomps Nsur Nsegs
 end
 
-save PermEnDecompAS_Ns1000 all_decomps Nsur Nsegs subs1 subs2
+save PermEnDecompAS_Ns1000 all_decomps Nsur Nsegs sleep_subjects wake_subjects
 
 %% Test for differences between spectral and phase components 
 
@@ -81,7 +101,7 @@ L = nan(length(all_decomps),length(all_decomps{1}.lags));
 rmv = []; % remove these indices
 
 for isub = 1:length(all_decomps)
-    if ~isempty(all_decomps{isub}) && ~strcmp(subs1{isub},bl)
+    if ~isempty(all_decomps{isub}) && ~strcmp(sleep_subjects{isub},bl)
         P(isub,:,:) = all_decomps{isub}.phase;
         S(isub,:,:) = all_decomps{isub}.spec;
         X(isub,:,:) = all_decomps{isub}.interact;
@@ -91,22 +111,22 @@ for isub = 1:length(all_decomps)
     end
 end
 
-subs1(rmv)
-ages1(rmv)
+sleep_subjects(rmv)
+sleep_ages(rmv)
 
 
 P(rmv,:,:) = [];
 S(rmv,:,:) = [];
 X(rmv,:,:) = [];
 L(rmv,:,:) = [];
-subs1(rmv) = [];
-subs2(rmv) = [];
+sleep_subjects(rmv) = [];
+wake_subjects(rmv) = [];
 
 PX = P + X; % add phase + interaction
 
-assert(length(subs1)==length(subs2))
-for i = 1:length(subs1)
-    assert(strcmp(subs1{i},subs2{i}))
+assert(length(sleep_subjects)==length(wake_subjects))
+for i = 1:length(sleep_subjects)
+    assert(strcmp(sleep_subjects{i},wake_subjects{i}))
 end
 
 alpha = 0.01;
@@ -144,15 +164,15 @@ for itau = 1:size(P,2)
     PartSPX = [repmat(categorical({'Spectral'}),size(P,1),1); ...
         repmat(categorical({'Non-spectral'}),size(PX,1),1)];
     
-    TdPSI = table([P(:,itau); S(:,itau); X(:,itau)],PartPSI,categorical([subs1 subs1 subs1])',...
+    TdPSI = table([P(:,itau); S(:,itau); X(:,itau)],PartPSI,categorical([sleep_subjects sleep_subjects sleep_subjects])',...
         'VariableNames',{'Contribution','Part','Subject'});
-    TdPS = table([P(:,itau); S(:,itau)],PartPS,categorical([subs1 subs1])',...
+    TdPS = table([P(:,itau); S(:,itau)],PartPS,categorical([sleep_subjects sleep_subjects])',...
         'VariableNames',{'Contribution','Part','Subject'});
-    TdSI = table([S(:,itau); X(:,itau)],PartSI,categorical([subs1 subs1])',...
+    TdSI = table([S(:,itau); X(:,itau)],PartSI,categorical([sleep_subjects sleep_subjects])',...
         'VariableNames',{'Contribution','Part','Subject'});
-    TdPI = table([P(:,itau); X(:,itau)],PartPI,categorical([subs1 subs1])',...
+    TdPI = table([P(:,itau); X(:,itau)],PartPI,categorical([sleep_subjects sleep_subjects])',...
         'VariableNames',{'Contribution','Part','Subject'});
-    TdSPX = table([P(:,itau); PX(:,itau)],PartSPX,categorical([subs1 subs2])',...
+    TdSPX = table([P(:,itau); PX(:,itau)],PartSPX,categorical([sleep_subjects wake_subjects])',...
         'VariableNames',{'Contribution','Part','Subject'});
     
     result    = fitlme(TdPSI,'Contribution ~ Part + (1|Subject)');
@@ -203,6 +223,34 @@ for itau = 1:size(P,2)
     %close all
     
 end
+
+%% Export table with data for Figure 8
+
+load joel_lay.mat lay
+AmplitudeComponent = reshape(Sall,size(Sall,1),size(Sall,2)*size(Sall,3))';
+NonamplitudeComponent = reshape(PXall,size(PXall,1),size(PXall,2)*size(PXall,3))';
+rows = cell(size(Sall,2)*size(Sall,3),1);
+lags = 2.^[3:7];
+
+rcnt = 0;
+for ich = 1:size(Sall,3)
+    for itau = 1:size(Sall,2)
+        rcnt = rcnt + 1;
+        rows{rcnt} = sprintf('%s_tau=%ims',lay.label{ich},lags(itau));
+    end
+end
+
+ColHeaders = [{'Channel_and_lag'} sleep_subjects sleep_subjects];
+
+
+Table_Fig8_Amp = table(rows,AmplitudeComponent);
+Table_Fig8_Nonamp = table(rows,NonamplitudeComponent);
+
+% Export these tables and combine them later in Excel
+writetable(Table_Fig8_Amp,'./Table_Fig8_Amp.csv')
+writetable(Table_Fig8_Nonamp,'./Table_Fig8_Nonamp.csv')
+Theaders = table(ColHeaders);
+writetable(Theaders,'./Table_Fig8_headers.csv')
 
 %% Report stats
 qval = mafdr(pval(:),'bhfdr',true);
@@ -431,28 +479,3 @@ end
 end
 
 
-%% Archived code 
-
-%     for ich = 1:size(Pall,3)
-%         % Amplitude component
-%         [h,p,ci,stat] = ttest(Sall(:,itau,ich));
-%         pstats(itau,ich,1) = p;
-%         tstats(itau,ich,1) = stat.tstat;
-%         if p < 0.0005
-%             %fprintf('Sig. amplitude, %ith chan, tau = %i, p = %1.2d, t = %2.2f\n',ich,LAGS(itau),p,stat.tstat);
-%         end
-%         % Phase component
-%         [h,p,ci,stat] = ttest(Pall(:,itau,ich));
-%         pstats(itau,ich,2) = p;
-%         tstats(itau,ich,2) = stat.tstat;
-%         if p < 0.0005
-%             %fprintf('Sig. phase, %ith chan, tau = %i, p = %1.2d, t = %2.2f\n',ich,LAGS(itau),p,stat.tstat);
-%         end
-%         % Interaction component
-%         [h,p,ci,stat] = ttest(Xall(:,itau,ich));
-%         pstats(itau,ich,3) = p;
-%         tstats(itau,ich,3) = stat.tstat;
-%         if p < 0.0005
-%             %fprintf('Sig. interact, %ith chan, tau = %i, p = %1.2d, t = %2.2f\n',ich,LAGS(itau),p,stat.tstat);
-%         end
-%     end
