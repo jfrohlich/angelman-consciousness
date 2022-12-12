@@ -24,10 +24,10 @@ ana_AS_2021_ML_Train_On_TD.m
 
 ## directories
 
-./2021_analysis            # Output for the new paper (machine learning)
-./2021_analysis/TrainOnTD  # Output specific to the neurotypical replication (train on healthy data) in the new paper
-./scripts                  # These are the scripts and functions described in this file
-./scripts/archived         # Old scripts, consider deleting 
+* ./2021_analysis            # Output for the new paper (machine learning)
+* ./2021_analysis/TrainOnTD  # Output specific to the neurotypical replication (train on healthy data) in the new paper
+* ./scripts                  # These are the scripts and functions described in this file
+* ./scripts/archived         # Old scripts, consider deleting 
 
 ## wrappers and helpers 
 *  AS_data_scroll.m               # calls scroll_data.m, contains code for AS specific options, such as labels for delta patterns 
