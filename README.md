@@ -41,7 +41,7 @@ ana_AS_2021_ML_Train_On_TD.m
 ## Tools
 
 * ro_LZC.m                   # Computes the gMLZ Lempel-Ziv from Yeh 2018, as well as the "vanilla" Lempel-Ziv
-* ro_LZCv.m                  # Only compute the vanilla Lempel-Ziv, all other fields will be left empty. This is the one used for the new paper (machine learning)
+* ro_LZCv.m                  # Only compute the vanilla Lempel-Ziv and CTW, all other fields will be left empty. 
 * ro_mse.m                   # Computes MSE with parameters to choose from Xie or Costa, can set dyanamic tolerance
 * ro_PermEn.m                # Computes the permutation entropy by calling code by Jaco Sitt's group
 * ro_wPLI.m                  # Compute the debiased weighted phase lag index
@@ -70,7 +70,7 @@ ana_AS_2021_ML_Train_On_TD.m
 * ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 
 * ana_AS_FT_Dup15q_allow_nan_0dot2.m # Same as above for Dup15q
 * ana_AS_FT_TD_allow_nan_0dot2.m     # Same as above for healthy controls
-* ana_AS_LZC.m                       # Computes Lempel-Ziv for AS
+* ana_AS_LZC.m                       # Computes Lempel-Ziv and CTW for AS
 * ana_AS_LZC_Dup15q.m                # Same as above for Dup15q
 * ana_AS_LZC_TD_controls.m           # Same as above for healthy controls
 * ana_AS_MSE_Xie_dynr.m              # Computes multiscale entropy for AS with dynamic tolerance (we used this version)
