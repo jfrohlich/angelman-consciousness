@@ -75,3 +75,4 @@ ana_AS_2021_ML_Train_On_TD.m
 * ana_AS_wSMI.m                      # Routine for the weighted symbolic mutual information on AS data by calling code by Jaco Sitt
 * CountPeaksFooof.m                  # Count spectral peaks (channel-averaged) for each participant
 * PermEnDecomposition.m              # Modified code from Pedro, this is what actually run the Permutation Entropy decomposition 
+* connectivity_distance_plotting.m   # Shows histogram of channel distances and matrix of channel-pair groupings
