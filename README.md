@@ -67,21 +67,11 @@ ana_AS_2021_ML_Train_On_TD.m
 
 * ana_AS_2021_ML_and_STATS.m         # This is the main script that runs the stats and generates figures for the newest paper (Machine learning)
 * ana_AS_2021_ML_Train_On_TD.m       # This is just like ana_AS_2021_ML_and_STATS, EXCEPT that it implements the neurotypical replication * analysis (i.e., the training is done on healthy children rather than Angelman syndrome)
-* ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 
-* ana_AS_FT_Dup15q_allow_nan_0dot2.m # Same as above for Dup15q
-* ana_AS_FT_TD_allow_nan_0dot2.m     # Same as above for healthy controls
-* ana_AS_LZC.m                       # Computes Lempel-Ziv and CTW for AS
-* ana_AS_LZC_Dup15q.m                # Same as above for Dup15q
-* ana_AS_LZC_TD_controls.m           # Same as above for healthy controls
-* ana_AS_MSE_Xie_dynr.m              # Computes multiscale entropy for AS with dynamic tolerance (we used this version)
-* ana_AS_MSE_Xie_dynr_Dup15q_controls.m # Same as above for Dup15q
-* ana_AS_MSE_Xie_dynr_TD_controls.m  # Same as above for healthy controls
+* ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform with allow_nan = 0.2 
+* ana_AS_LZC.m                       # Computes Lempel-Ziv and CTW 
+* ana_AS_MSE_Xie_dynr.m              # Computes multiscale entropy with dynamic tolerance (we used this version)
 * ana_AS_PermEn_Decomp.m             # This calls the permutation entropy decomposition on the AS data and does the stats, figures, etc.
-* ana_AS_wPLI_fieldtrip.m            # Compute the dibiased weighted phase locking index on AS data using Fieldtrip
-* ana_AS_wPLI_TD_fieldtrip.m         # Same as above, but for healthy controls
-* ana_AS_wPLI_Dup15q.m               # Same as above, but for Dup15q
+* ana_AS_wPLI_fieldtrip.m            # Compute the dibiased weighted phase locking index on data using Fieldtrip
 * ana_AS_wSMI.m                      # Routine for the weighted symbolic mutual information on AS data by calling code by Jaco Sitt
-* ana_AS_wSMI_TD.m                   # Same as above, but for healthy controls
-* ana_AS_wSMI_Dup15q.m               # Same as above, but for Dup15q 
 * CountPeaksFooof.m                  # Count spectral peaks (channel-averaged) for each participant
 * PermEnDecomposition.m              # Modified code from Pedro, this is what actually run the Permutation Entropy decomposition 
