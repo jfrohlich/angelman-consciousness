@@ -1,3 +1,28 @@
+% Joel Frohlich
+% University of California, Los Angeles (UCLA)
+% Monti Lab, Psychology Department
+%
+% University of Tuebingen, Germany
+% Institue for Neuromodulation and Neurotechnology 
+%
+% Last update: 12 Dec, 2022 (cleaned up code and comments)
+
+%     This code first compiles the LZ76 code using the
+%     mex command. The code detects the operating system and sets the path
+%     and files accordingly. The code computes the LZC value for sleep and
+%     wake states with and without scrambled FFT phases (as determined by 
+%     the 'surrogate' variable which can be set to true or false. The code 
+%     has parameters for signal smoothing, which are NOT used for LZCv
+%     computation. The code creates a table of frequency scales and writes
+%     it to a file. The code loads data files and computes the LZC value
+%     for each. The code saves the results to the specified output
+%     directory.
+
+
+% Note that in the Communications Biology paper, we only used LZCv (i.e.,
+% the "vanilla" Lempel-Ziv) and we did not use the surrogate data option
+% with this function. 
+
 clearvars
 rng(45783) % seed added 02.26.19
 OS = computer; % detect opperating system
@@ -21,21 +46,21 @@ end
 
 %match = false; % power matched sections?
 
-% sleep = true; % asleep or awake?
-% surrogate = false; % scramble FFT phases?
-% compute_LZC(sleep,surrogate,files,pth)
+sleep = true; % asleep or awake?
+surrogate = false; % scramble FFT phases?
+compute_LZC(sleep,surrogate,files,pth)
 
 sleep = false; % asleep or awake?
 surrogate = false; % scramble FFT phases?
 compute_LZC(sleep,surrogate,files,pth)
 
-% sleep = true; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_LZC(sleep,surrogate,files,pth)
-% 
-% sleep = false; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_LZC(sleep,surrogate,files,pth)
+sleep = true; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_LZC(sleep,surrogate,files,pth)
+
+sleep = false; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_LZC(sleep,surrogate,files,pth)
 
 %%
 
