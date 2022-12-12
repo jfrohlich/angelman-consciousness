@@ -40,9 +40,6 @@ switch OS
 end
 
 
-% these are the files we already know we want to use
-% load('select_files','select_files')
-
 sleep = true; % asleep or awake?
 [sleepsec,sleep_subjects,sleep_ages] = get_sections(sleep,files,pth,new_fsample);
 
