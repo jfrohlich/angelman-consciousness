@@ -51,6 +51,7 @@ ana_AS_2021_ML_Train_On_TD.m
 * ro_wPLI.m                  # Compute the debiased weighted phase lag index
 * ro_wSMI.m                  # Computes the weighted symbolic information by calling code by Sitt's group
 * surrogate_data.m           # Crates surrogate data with same amplitude distribution using FFT phase randomization (calls code that D Toker gave me)
+* ro_freq_wavelet_JF.m       # This is the main frequency transform. The "_JF" is added at the end so that the original file created by Joerg wouldn't accidentally be overwritten
 
 ## Preprocessing
 
