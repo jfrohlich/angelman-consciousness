@@ -1,3 +1,32 @@
+
+% Joel Frohlich
+% University of California, Los Angeles (UCLA)
+% Monti Lab, Psychology Department
+%
+% University of Tuebingen, Germany
+% Institue for Neuromodulation and Neurotechnology 
+%
+% Last update: 12 Dec, 2022 (cleaned up code and comments)
+
+% This code processes data files to compute the weighted phase lag index
+% (wPLI) for awake and asleep states. It starts by setting the random
+% number generator seed and detecting the operating system. It then sets
+% the path to the folder containing the data files and loads the files in
+% the folder.
+% 
+% The code then defines a function compute_wPLI that computes the wPLI for
+% either the awake or asleep state. The function takes as input the sleep
+% state (true for asleep, false for awake), the files to process, and the
+% path to the files. It then creates a directory to store the output files,
+% depending on the sleep state.
+% 
+% For each file, the function loads the file and checks if it contains
+% useable sleep data. If not, it skips the file. The function then sets bad
+% data points to NaNs, which will be excluded from the wPLI computation. It
+% then computes the wPLI using the ft_connectivity_wpli function from the
+% FieldTrip toolbox. The function saves the output to a file in the output
+% directory.
+
 clearvars
 rng(45783) % seed added 02.26.19
 OS = computer; % detect opperating system
@@ -16,8 +45,8 @@ switch OS
         files = dir(sprintf('%s%s',pth,'*.mat'));
 end
 
-% sleep = true; % asleep or awake?
-% compute_wPLI(sleep,files,pth)
+sleep = true; % asleep or awake?
+compute_wPLI(sleep,files,pth)
 
 sleep = false; % asleep or awake?
 compute_wPLI(sleep,files,pth)
