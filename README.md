@@ -38,9 +38,6 @@ ana_AS_2021_ML_Train_On_TD.m
 *  CalcPermEn.m                   # Helper function to compute the permutation entropy, calls code by Jaco Sitt
 *  cohen_d.m                      # Computes effect sizes as Cohen's d
 
-## Frequency transforms
-* ro_freq_wavelet_JF.m       # This is the main frequency transform. The "_JF" is added at the end so that the original file created by Joerg wouldn't accidentally be overwritten
-
 ## Tools
 
 * ro_LZC.m                   # Computes the gMLZ Lempel-Ziv from Yeh 2018, as well as the "vanilla" Lempel-Ziv
@@ -70,7 +67,7 @@ ana_AS_2021_ML_Train_On_TD.m
 
 * ana_AS_2021_ML_and_STATS.m         # This is the main script that runs the stats and generates figures for the newest paper (Machine learning)
 * ana_AS_2021_ML_Train_On_TD.m       # This is just like ana_AS_2021_ML_and_STATS, EXCEPT that it implements the neurotypical replication * analysis (i.e., the training is done on healthy children rather than Angelman syndrome)
-* ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 THIS IS THE VERSION WE USED
+* ana_AS_FT_allow_nan_0dot2.m        # Computes frequency transform for AS with allow_nan = 0.2 
 * ana_AS_FT_Dup15q_allow_nan_0dot2.m # Same as above for Dup15q
 * ana_AS_FT_TD_allow_nan_0dot2.m     # Same as above for healthy controls
 * ana_AS_LZC.m                       # Computes Lempel-Ziv for AS
