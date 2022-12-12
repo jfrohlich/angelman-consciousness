@@ -92,7 +92,6 @@ ana_AS_2021_ML_Train_On_TD.m
 * ana_AS_MSE_Xie_dynr_Dup15q_controls.m # Same as above for Dup15q
 * ana_AS_MSE_Xie_dynr_TD_controls.m  # Same as above for healthy controls
 * ana_AS_PermEn_Decomp.m             # This calls the permutation entropy decomposition on the AS data and does the stats, figures, etc.
-* ana_AS_TFT.m                       # This performs a time-frequency transform on the data, e.g., for finding sections of high/low delta power in the first paper (Neurosci of Consci)
 * ana_AS_wPLI_fieldtrip.m            # Compute the dibiased weighted phase locking index on AS data using Fieldtrip
 * ana_AS_wPLI_TD_fieldtrip.m         # Same as above, but for healthy controls
 * ana_AS_wPLI_Dup15q.m               # Same as above, but for Dup15q
@@ -101,10 +100,3 @@ ana_AS_2021_ML_Train_On_TD.m
 * ana_AS_wSMI_Dup15q.m               # Same as above, but for Dup15q 
 * CountPeaksFooof.m                  # Count spectral peaks (channel-averaged) for each participant
 * PermEnDecomposition.m              # Modified code from Pedro, this is what actually run the Permutation Entropy decomposition 
-
-## Stats and plotting
-
-* AS_big_picture_figure.m                # Plots barplots of ROC AUCs for each feature type and group (note--this figure was later changed to histograms)
-* connectivity_distance_plotting.m       # Generates histogram of channel distances and matrix of channel-pair groupings
-* Dup15q_example_EEG_plotting.m          # Plots Dup15q EEG traces for Fig. 1 in the new paper
-* LZc_illustration.m                     # Generates schematic of LZC for Fig. 1
