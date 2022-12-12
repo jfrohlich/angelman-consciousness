@@ -1,3 +1,29 @@
+% Code modified by JF from original code by Pedro Mediano
+% See here https://github.com/pmediano/EntRate
+
+%     The PermEnDecomposition function takes in two sets of time series
+%     data (x1 and x2) and computes the average difference in permutation
+%     entropy between the two datasets. The function also decomposes the
+%     permutation entropy difference in spectral, phasic, and interaction
+%     terms using phase randomization techniques. The function accepts an
+%     optional argument nb_samples which specifies the number of surrogate
+%     samples to use (default is 1000). The function returns a struct res
+%     containing all elements of the decomposition, including the
+%     permutation entropy for each dataset, the total permutation entropy
+%     difference, and the spectral, phasic, and interaction components of
+%     the permutation entropy difference. The code begins by checking the
+%     input arguments and initializing some variables. It then sets the
+%     number of workers to use for parallelization and defines some
+%     function handles depending on whether the code is being run in Octave
+%     or Matlab. The code then loops over the different lag values and
+%     computes the permutation entropy for each dataset using the
+%     CalcPermEn function. Next, the code performs the phase randomization
+%     on the data, and computes the permutation entropy and its spectral
+%     and phasic components using the PermEn function. The code then saves
+%     the results to the res struct and returns it at the end of the
+%     function.
+% 
+
 function [ res ] = PermEnDecomposition(x1, s1, x2, s2, nb_samples, new_fsample)
 %% PermEnDECOMPOSITION Decomposes spectral, phasic, and interaction components
 % of the PermEn difference between two datasets.
