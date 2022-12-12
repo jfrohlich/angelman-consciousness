@@ -30,7 +30,6 @@ ana_AS_2021_ML_Train_On_TD.m
 *  plot_topo.m                    # wrapper function for fieldtrip plot_topo
 *  plot_topo_AS.m                 # AS specific wrapper for topo plotting 
 *  plot_topo_AS_classic.m         #  This wrapper function calls the "classic" (i.e., original) FT topoplot function with thin countour lines 
-*  effect_size.m                  # helper function: cohen's d 
 *  makefigpretty.m                # Renders figure in format suitable for journal publication (This has been moved to Universal directory)
 *  myresample.m                   # Fixes bug in the native Matlab function
 *  myround.m                      # Used for finding smoothing windows with gMLZ; this is a wrapper version of the native MATLAB round function that allows user to specify whether we should round towards nearest ODD integer. 
