@@ -1,6 +1,26 @@
+% This Matlab code uses the FOOOF toolbox to analyze the power spectra of 
+% the data in dataPeaks. It loads the data and the necessary toolbox and 
+% sets some parameters for the analysis. Then, it creates some empty arrays 
+% to store the results of the analysis.
+% 
+% The code then iterates over all of the subjects in the data and, for each 
+% subject, extracts the power spectrum of the data and interpolates it onto 
+% a new frequency range, foihd2. It then runs the fooof function on the 
+% interpolated data to find the peak frequency and bandwidth of the 
+% spectrum and saves the results to the appropriate arrays. Finally, it 
+% saves the results to a file.
+
+%     The code begins by loading the dataPeaks file, which contains power spectrum data for the sleep and wake data of each subject in the 3 different groups.
+%     The settings variable is then defined as an empty array, and variables for the frequency range and frequencies for the power spectrum analysis are defined.
+%     The code then creates empty arrays to store the peak frequency data for each subject in each group.
+%     The code then loops through each subject in the TD group, performs the power spectrum analysis on their wake data, and finds the peak frequency. The peak frequency is then added to the TDwakePeaksExact array and to the appropriate bin in the TDwakePeaks histogram.
+%     This process is repeated for the AS and DS groups with their respective arrays.
+%     Next, the code plots the histograms of peak frequencies for the 3 groups and saves the figures to files.
+%     Finally, the code saves the peak frequency data for each subject in each group to a .mat file.
+
 load dataPeaks
 
-try
+try 
     pyenv("ExecutionMode","OutOfProcess")
 catch
     fprintf('Python already added\n')
