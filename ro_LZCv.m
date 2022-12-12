@@ -77,53 +77,6 @@ for ichan=1:n_chan
         vLZC(ichan) = LZ76(x>=median(x))/vB(ichan);
         n_valid_CTW(ichan)=length(x); % number of data points
         CTW(ichan) = CTWEntropyRate(x); % CTW entropy rate, from Mediano et al. 
-        
-        % CSER is commented out
-        % n_valid_CSER(ichan)=length(x); % number of data points
-        % CSER(ichan) = StateSpaceEntropyRate(x, cfg.new_srate); % state space entropy rate from Mediano et al. 
-        
-        % The generalized multiscale LZc is commented out
-%         for ism=1:length(cfg.foi)
-%             % make a copy of the signal
-%             refsig = x; % this will become the origina "reference" signal
-%             if isempty(refsig) || length(refsig) < cfg.smooth_lo(end) % if this data was all NaNs or shorter than the largest smoothing window
-%                 gLZC(ichan,ism) = NaN;
-%                 n_valid_gLZC(ichan,ism) = NaN;
-% 
-%             else
-%                 % make binary sequence using moving-median filter
-%                 % Ibanez-Molina et al 2015
-%                 LPsig = medfilt1(refsig,cfg.smooth_hi(ism),'truncate'); % attenuate high frequencies
-%                 Tdw   = medfilt1(refsig,cfg.smooth_lo(ism),'truncate');  % generate threshold for binarization
-%                 
-%                 % trim the beginning and end of the time series where median is
-%                 % computed based on truncated data
-%                 assert(length(Tdw)==length(LPsig),'Moving threshold doesn''t match signal length')
-%                 start = (cfg.smooth_lo(ism)-1)/2+1;
-%                 stop  = length(Tdw) - (cfg.smooth_lo(ism)-1)/2;
-%                 LPsig = LPsig(start:stop);
-%                 Tdw = Tdw(start:stop);
-%                 
-%                 % do one last check on data length, since we truncated the time
-%                 % series
-%                 
-%                 if length(Tdw) <= 2 % Needs to be at least two elements (since diff operation removes one)
-%                     gLZC(ichan,ism) = NaN;
-%                     n_valid_gLZC(ichan,ism) = NaN;
-% 
-%                 else
-%                     n_valid_gLZC(ichan,ism)=length(LPsig); % number of data points
-%                     
-%                     % normalization factors (to control for data length)
-%                     gB(ichan,ism) = n_valid_gLZC(ichan,ism)/log2(n_valid_gLZC(ichan,ism));
-%                     
-%                     % Compute gLZC below, credit Mediano et al for LZ algoirthm
-%                     % and Yeh and Shi 2018 for gLZC
-%                     gLZC(ichan,ism) =  LZ76(LPsig>=Tdw)/gB(ichan,ism);
-%                 end
-%                 clear Tdw refsig LPsig % just to be safe
-%             end
-%         end
      end
      if cfg.verbose, fprintf('. done (%.2f sec)\n',toc), end
  end
