@@ -12,7 +12,7 @@ actually does.
 
 ## General overview of work flow
 
-* Data are imported using ana_preproc_as_* _butterHP_firLP.m, where "* " designates the specific data
+* Data are imported using ana_preproc_as_*_butterHP_firLP.m, where "*" designates the specific data
 being imported (e.g., "Dup15q_wsleep"). 
 * Imported data are manually inspected and ICA is performed using AS_data_scroll.m, and data are then
 postprocessed using ana_AS_postproc_butterhp_firlp.m, ana_AS_postproc_Dup15q.m, or ana_AS_postproc_TD.m. 
