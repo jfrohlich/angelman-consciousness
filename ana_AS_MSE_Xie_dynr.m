@@ -1,3 +1,23 @@
+% Joel Frohlich
+% University of California, Los Angeles (UCLA)
+% Monti Lab, Psychology Department
+%
+% University of Tuebingen, Germany
+% Institue for Neuromodulation and Neurotechnology 
+%
+% Last update: 12 Dec, 2022 (cleaned up code and comments)
+
+%     The code compute_MSE() takes in a sleep parameter that specifies
+% whether to use data from when the subjects are asleep or awake, and a
+% surrogate parameter that specifies whether to scramble the FFT phases or
+% not. The function creates a directory for the output based on the values
+% of the sleep and surrogate parameters. The function loops through the
+% .mat files in the specified directory, loading each file and extracting
+% the data. The function performs some sanity checks on the data, converts
+% the data to NaNs if necessary, and then applies  the mMSE algorithm to
+% the data. The results are saved in the output directory.
+
+
 % run function once for sleep data, once for awake data
 clearvars
 rng(45783) % seed added 02.26.19
@@ -15,11 +35,6 @@ switch OS
         files = dir(sprintf('%s%s',pth,'*.mat'));
 end
 
-% Uncomment below to get the files that went into the Neuro of Consci
-% paper (Frohlich et al. 2020)
-% load('select_files','select_files')
-
-
 gpu = true;
 
 sleep = true; % asleep or awake?
@@ -30,13 +45,13 @@ sleep = false; % asleep or awake?
 surrogate = false; % scramble FFT phases?
 compute_MSE(sleep,surrogate,files,pth,gpu)
 
-% sleep = true; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_MSE(sleep,surrogate,files,pth,gpu)
-% 
-% sleep = false; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_MSE(sleep,surrogate,files,pth,gpu)
+sleep = true; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_MSE(sleep,surrogate,files,pth,gpu)
+
+sleep = false; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_MSE(sleep,surrogate,files,pth,gpu)
 
 
 %%

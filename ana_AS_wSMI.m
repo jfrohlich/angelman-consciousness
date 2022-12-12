@@ -5,7 +5,7 @@
 % University of Tuebingen, Germany
 % Institue for Neuromodulation and Neurotechnology 
 %
-% Last update: 04 Dec, 2022 (cleaned up code and comments)
+% Last update: 12 Dec, 2022 (cleaned up code and comments)
 
 %The code has a switch statement that sets a path to a directory containing
 %the .mat files depending on the type of operating system that the script
