@@ -56,8 +56,6 @@ ana_AS_2021_ML_Train_On_TD.m
 * FDRCorrectAndCombineTabesTrainOnTD.m # Same as above, but for the replication on healthy data
 * Find_drowsy_tags.m             # After loading a dataset, this will look for drowsy tags and related annotations (e.g., yawning)
 * get_annotations.m              # Computes the degree of overlap in sleep annotations (our annotations vs Philpot annotations)
-* Read_Nespeca_Annotations.m     # Reads the annotations by Mark Nespeca and writes them to a CSV file
-* Transfer_sleep_labels.m          # Move the sleep labels from old ICA files to the files with new preprocessing/filtering
 * Update_Nespeca_annotations.m   # This adds sleep blocks from a table to the existing data field:  data.cfg.dattype.AWAKE_NESPECA = [data.cfg.dattype.AWAKE_NESPECA; T.awakeStart(irow)* data.fsample T.awakeStop(irow)* data.fsample];
 * ro_dwPLI.m                     # Test the debiased weighted phase lag index code on some toy data
 
