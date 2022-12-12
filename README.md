@@ -10,9 +10,6 @@ looking to replicate other parts of the project, or just wanting to understand
 the dependencies of the main script, see below for a list of what each .m file
 actually does. 
 
-*  000_analysis_AS_Monti.m 
-     *  This file describes each script and the analysis pipeline (it's basically this readme file, but as a .m file)
-
 ## General overview of work flow
 
 * Data are imported using ana_preproc_as_* _butterHP_firLP.m, where "* " designates the specific data
