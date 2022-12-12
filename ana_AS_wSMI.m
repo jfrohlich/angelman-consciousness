@@ -1,3 +1,25 @@
+% Joel Frohlich
+% University of California, Los Angeles (UCLA)
+% Monti Lab, Psychology Department
+%
+% University of Tuebingen, Germany
+% Institue for Neuromodulation and Neurotechnology 
+%
+% Last update: 04 Dec, 2022 (cleaned up code and comments)
+
+%The code has a switch statement that sets a path to a directory containing
+%the .mat files depending on the type of operating system that the script
+%is run on. The script also defines a function called compute_wSMI that
+%takes four inputs: a logical value indicating whether the data was
+%collected during sleep or wakefulness, a logical value indicating whether
+%the FFT phases of the data should be scrambled, a structure containing
+%information about the files to be processed, and a numeric value
+%specifying the target sampling rate of the data. The function creates a
+%new directory to save the results in, depending on whether the data was
+%collected during sleep or wakefulness. Then, it iterates over the files in
+%the input structure, loading each file and computing wSMI on the data in
+%the file. Finally, the function saves the results in the new directory.
+
 clearvars
 rng(45783) % seed added 02.26.19
 OS = computer; % detect opperating system
@@ -31,13 +53,13 @@ sleep = false; % asleep or awake?
 surrogate = false; % scramble FFT phases?
 compute_wSMI(sleep,surrogate,files,pth,new_fsample)
 
-% sleep = true; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_wSMI(sleep,surrogate,files,pth,match,new_fsample)
-% 
-% sleep = false; % asleep or awake?
-% surrogate = true; % scramble FFT phases?
-% compute_wSMI(sleep,surrogate,files,pth,match,new_fsample)
+sleep = true; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_wSMI(sleep,surrogate,files,pth,match,new_fsample)
+
+sleep = false; % asleep or awake?
+surrogate = true; % scramble FFT phases?
+compute_wSMI(sleep,surrogate,files,pth,match,new_fsample)
 %%
 
 function[] = compute_wSMI(sleep,surrogate,files,pth,new_fsample)
